@@ -73,19 +73,11 @@ public class PomodoroGUI extends javax.swing.JFrame {
         timeLeftLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         timeLeftLabel.setText("On Break");
 
-        currentTasksList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        currentTasksList.setModel(new DefaultListModel());
         currentTasksList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(currentTasksList);
 
-        waitingForList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        waitingForList.setModel(new DefaultListModel());
         jScrollPane2.setViewportView(waitingForList);
 
         nextTaskLabel.setText("Current Tasks:");
@@ -93,7 +85,7 @@ public class PomodoroGUI extends javax.swing.JFrame {
         waitingForLabel.setText("Waiting For:");
 
         currentPomodoroLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        currentPomodoroLabel.setText("Current Pomodoro: Task A");
+        currentPomodoroLabel.setText("Current Pomodoro" + currentTasksList.getSelectedValue());
 
         activityInventoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,12 +94,27 @@ public class PomodoroGUI extends javax.swing.JFrame {
             new String [] {
                 "Task", "Pomodoro", "Avg Pomodoros", "Total Pomodoros"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         activityInventoryTable.setEditingRow(1);
         activityInventoryTable.setOpaque(false);
+        activityInventoryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        activityInventoryTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(activityInventoryTable);
 
         addTaskToActivityInventoryTextField.setText("Some Task to Add...");
+        addTaskToActivityInventoryTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                addTaskToActivityInventoryTextFieldFocusGained(evt);
+            }
+        });
 
         addTaskToActivityInventoryButton.setText("Add Task To Activity Inventory");
         addTaskToActivityInventoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -120,60 +127,66 @@ public class PomodoroGUI extends javax.swing.JFrame {
 
         moveCurrentTaskToWaitingForButton.setText("Waiting For");
 
-        addTaskToNextButton.setText("Add Task To \"Next\"");
+        addTaskToNextButton.setText("Add Task To \"Current Tasks\"");
+        addTaskToNextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTaskToNextButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(currentPomodoroLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(startPomodoroButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stopPomodoroButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addTaskToActivityInventoryTextField)
-                            .addComponent(addTaskToActivityInventoryButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(doneWithTaskButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(moveCurrentTaskToWaitingForButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(timeLeftLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(addTaskToActivityInventoryTextField)
+                                    .addComponent(addTaskToActivityInventoryButton)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(doneWithTaskButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(moveCurrentTaskToWaitingForButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(timeLeftLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nextTaskLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(startPomodoroButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stopPomodoroButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(230, 230, 230)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nextTaskLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(waitingForLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(currentPomodoroLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2)
-                            .addComponent(waitingForLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)))
-                    .addComponent(addTaskToNextButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addComponent(addTaskToNextButton)
+                        .addGap(164, 164, 164))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentPomodoroLabel)
-                    .addComponent(addTaskToNextButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(addTaskToNextButton))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(waitingForLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(nextTaskLabel)
-                                .addComponent(moveCurrentTaskToWaitingForButton)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(waitingForLabel)
+                                .addComponent(nextTaskLabel))
+                            .addComponent(moveCurrentTaskToWaitingForButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,7 +214,7 @@ public class PomodoroGUI extends javax.swing.JFrame {
     private void startPomodoroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPomodoroButtonActionPerformed
 
         ActionListener taskPerformer = new ActionListener(){
-            int counter = 1500;
+            int counter = 1501;
             public void actionPerformed(ActionEvent evt)
             {
                 counter--;
@@ -221,12 +234,13 @@ public class PomodoroGUI extends javax.swing.JFrame {
         };
         
         timer = new Timer(1000, taskPerformer);
+        timer.setInitialDelay(0);
         timer.start();
     }//GEN-LAST:event_startPomodoroButtonActionPerformed
 
     private void stopPomodoroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopPomodoroButtonActionPerformed
         timer.stop();
-        timeLeftLabel.setText("Done!");
+        timeLeftLabel.setText("Pomodoro Canceleds");
     }//GEN-LAST:event_stopPomodoroButtonActionPerformed
 
     private void addTaskToActivityInventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskToActivityInventoryButtonActionPerformed
@@ -238,6 +252,25 @@ public class PomodoroGUI extends javax.swing.JFrame {
             model.addRow(new Object[]{addTaskToActivityInventoryTextField.getText(), 0, 0,0});
         }       
     }//GEN-LAST:event_addTaskToActivityInventoryButtonActionPerformed
+
+    private void addTaskToActivityInventoryTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addTaskToActivityInventoryTextFieldFocusGained
+        addTaskToActivityInventoryTextField.setText("");
+    }//GEN-LAST:event_addTaskToActivityInventoryTextFieldFocusGained
+
+    private void addTaskToNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskToNextButtonActionPerformed
+        
+        DefaultListModel<String> listModel = (DefaultListModel)currentTasksList.getModel();
+        
+        int taskToAddRow = activityInventoryTable.getSelectedRow();
+        String taskToAdd = activityInventoryTable.getModel().getValueAt(taskToAddRow, 0).toString();
+        
+        
+        
+        listModel.add(taskToAddRow, taskToAdd);
+             
+        currentTasksList.setModel(listModel);
+        
+    }//GEN-LAST:event_addTaskToNextButtonActionPerformed
 
     /**
      * @param args the command line arguments
