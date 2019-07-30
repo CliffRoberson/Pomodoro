@@ -24,35 +24,37 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
+          <Component id="jScrollPane3" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="addTaskToActivityInventoryTextField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="addTaskToActivityInventoryButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="doneWithTaskButton" min="-2" pref="134" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="moveCurrentTaskToWaitingForButton" min="-2" pref="132" max="-2" attributes="0"/>
+                          <Component id="addTaskToActivityInventoryButton" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="startPomodoroButton" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="stopPomodoroButton" min="-2" pref="145" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="doneWithTaskButton" pref="134" max="32767" attributes="0"/>
+                                      <Component id="currentPomodoroActivityLabel" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="timeLeftLabel" alignment="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="moveCurrentTaskToWaitingForButton" pref="132" max="32767" attributes="0"/>
+                                      <Component id="currentSelectedTask" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane1" min="-2" pref="149" max="-2" attributes="0"/>
-                                  <Component id="nextTaskLabel" min="-2" pref="149" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="timeLeftLabel" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="startPomodoroButton" min="-2" pref="121" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="stopPomodoroButton" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="149" max="-2" attributes="0"/>
+                          <Component id="nextTaskLabel" min="-2" pref="149" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
@@ -60,10 +62,9 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="currentPomodoroLabel" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="addTaskToActivityInventoryTextField" min="-2" pref="414" max="-2" attributes="0"/>
+                      <EmptySpace pref="160" max="32767" attributes="0"/>
                       <Component id="addTaskToNextButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -75,41 +76,39 @@
               <Component id="jScrollPane3" min="-2" pref="402" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="currentPomodoroLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addTaskToNextButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="addTaskToActivityInventoryTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="addTaskToActivityInventoryButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="waitingForLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nextTaskLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                              <Component id="waitingForLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="nextTaskLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="moveCurrentTaskToWaitingForButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="currentSelectedTask" max="32767" attributes="0"/>
+                          <Component id="currentPomodoroActivityLabel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="doneWithTaskButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="moveCurrentTaskToWaitingForButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="doneWithTaskButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="addTaskToActivityInventoryTextField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="addTaskToActivityInventoryButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="timeLeftLabel" min="-2" pref="21" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="startPomodoroButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="stopPomodoroButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                  </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -157,6 +156,9 @@
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="currentTasksListValueChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -192,13 +194,10 @@
         <Property name="text" type="java.lang.String" value="Waiting For:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="currentPomodoroLabel">
+    <Component class="javax.swing.JLabel" name="currentSelectedTask">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Current Pomodoro&quot; + currentTasksList.getSelectedValue()" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -211,6 +210,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="activityInventoryTable">
           <Properties>
+            <Property name="autoCreateRowSorter" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Task" type="java.lang.Object"/>
@@ -281,11 +281,16 @@
     </Component>
     <Component class="javax.swing.JButton" name="addTaskToNextButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add Task To &quot;Current Tasks&quot;"/>
+        <Property name="text" type="java.lang.String" value="Add Activity To &quot;Current Tasks&quot;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTaskToNextButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="currentPomodoroActivityLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Current Pomodoro Activity:"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
